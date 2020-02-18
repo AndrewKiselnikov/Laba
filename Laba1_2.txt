@@ -1,0 +1,41 @@
+#include <iostream>
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int* mass;
+	int A, B, K, N, C = 0, T=0,Z=0;
+	std::cout << "Введите значение в диапозоне\n"
+		<< "От А=";
+	std::cin >> A;
+	std::cout << "До B=";
+	std::cin >> B;
+	K = 1 + rand() % (abs(A) + abs(B) + 1);
+	mass = new int[K];
+	for (int i = 0; i < K; i++)
+	{
+		N = A + rand() % (B - A + 1);
+		if (N % 2 == 0)
+		{
+			C++;
+		}
+		mass[i] = N;
+		std::cout << mass[i]<<"!";
+	}
+	std::cout << C <<"!#";
+	int* mass_R;
+	mass_R = new int[C];
+	while(T<C)
+	{
+		if (mass[Z] % 2 == 0)
+		{
+			mass_R[T] = mass[Z];
+			T++;
+		}
+		Z++;
+	}
+	delete[] mass;
+	for (int i = 0; i < C; i++)
+	{
+		std::cout << mass_R[i] << std::endl;
+	}
+}

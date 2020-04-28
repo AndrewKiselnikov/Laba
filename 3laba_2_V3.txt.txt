@@ -1,0 +1,61 @@
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <string>
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	std::string path;
+	char text[256];
+	char text1[256];
+	path = "D:\\Study\\TextFile1.txt"; //Указываем путь
+	std::ifstream file(path);
+	int Start = 0;
+	int Finish = 0;
+	int C_Buff = 0;
+	int C = 0;
+	int Buff_Start = 0;
+	int Buff_Finish = 0;
+	int Number = 0;
+	int Number_C = 0;
+	while (!file.eof())
+	{
+		file.getline(text, 256);
+		std::cout << text<<std::endl;
+		Number_C++;
+		for (int i = 0; text[i] != '\0'; i++)
+		{
+			C_Buff = 0;
+			if (text[i] != ' ')
+			{
+				Buff_Start = i;
+				while (text[i] != ' ')
+				{
+					i++;
+					C_Buff++;
+					if (text[i] == '?'|| text[i] == '.' || text[i] == '!')
+						break;
+				}
+				Buff_Finish = i;
+				if (C < C_Buff)
+				{
+					C = C_Buff;
+					Start = Buff_Start;
+					Finish = Buff_Finish;
+					Number = Number_C;
+				}
+			}
+		}
+	}
+	std::ifstream file1(path);
+	for (int N = 1; N < Number_C+1; N++)
+	{
+		file1.getline(text1, 256);
+		if (N == Number)
+		{
+			for (Start; Start < Finish; Start++)
+			{
+				std::cout << text1[Start];}
+		}
+	}
+}

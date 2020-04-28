@@ -1,0 +1,170 @@
+#include <iostream>
+#include <cstdio>
+#include <ctime>
+#include <cstdlib>
+void Start()
+{
+    std::cout << "Введите номер матрицы\n";
+    std::cout << std::endl;
+    std::cout << "1№ Обычная матрица\n";
+    std::cout << "2№ Нулевая матрица\n";
+    std::cout << "3№ Случайная матрица\n";
+}
+
+void Simple_mass(float** mass, float* x, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        mass[i] = new float[n];
+        for (int j = 0; j < n; j++)
+        {
+            std::cout << "mass[" << i << "][" << j << "] = ";
+            std::cin >> mass[i][j];
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        std::cout << "y[" << i << "] = ";
+        std::cin >> x[i];
+    }
+}
+
+void rand_mass(float** mass, float* x, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        mass[i] = new float[n];
+        for (int j = 0; j < n; j++)
+        {
+            mass[i][j] = (rand() % 10) - (rand() % +10);
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        x[i] = (rand() % 100) - (rand() % +100);
+    }
+}
+
+void null_mass(float** mass, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        int j = 0;
+        for (j = 0; j < n; j++)
+        {
+            if (mass[i][j] != 0)
+                break;
+        }
+        if (j == n)
+            std::cout << "Нулевая строка" << i << std::endl;
+    }
+}
+
+void out_mass(float** matrix, float* x, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            std::cout << matrix[i][j] << "*x" << j;
+            if (j < n - 1)
+                std::cout << " + ";
+        }
+        std::cout << " = " << x[i] << std::endl;
+    }
+    return;
+}
+
+float* gauss(float** mass, float* x, int n)
+{
+    float* y, max_mass;
+    int k, Number_mass;
+    const float Measur = 0.0000001;
+    y = new float[n];
+    k = 0;
+    while (k < n)
+    {
+        max_mass = abs(mass[k][k]);
+        Number_mass = k;
+        for (int i = k + 1; i < n; i++)
+        {
+            if (abs(mass[i][k]) > max_mass)
+            {
+                max_mass = abs(mass[i][k]);
+                Number_mass = i;
+            }
+        }
+        if (max_mass < Measur)
+        {
+            std::cout << "Нулевой столбец в "<< Number_mass;
+            return 0;
+        }
+        for (int j = 0; j < n; j++)
+        {
+            float temp = mass[k][j];
+            mass[k][j] = mass[Number_mass][j];
+            mass[Number_mass][j] = temp;
+        }
+        float buff = x[k];
+        x[k] = x[Number_mass];
+        x[Number_mass] = buff;
+        for (int i = k; i < n; i++)
+        {
+            float buff = mass[i][k];
+            if (abs(buff) < Measur) continue;
+            for (int j = 0; j < n; j++)
+                mass[i][j] = mass[i][j] / buff;
+            x[i] = x[i] / buff;
+            if (i == k)  continue;
+            for (int j = 0; j < n; j++)
+                mass[i][j] = mass[i][j] - mass[k][j];
+            x[i] = x[i] - x[k];
+        }
+        k++;
+    }
+    for (k = n - 1; k >= 0; k--)
+    {
+        y[k] = x[k];
+        for (int i = 0; i < k; i++)
+            x[i] = x[i] - mass[i][k] * y[k];
+    }
+    return y;
+}
+int main()
+{
+    setlocale(LC_ALL,"Russian");
+    int n, c = 1;
+    std::cout << "Введите количество уравнений: "; std::cin >> n;
+    float** mass, * x, * y;
+    mass = new float* [n];
+    x = new float[n];
+    srand(time(NULL));
+    do
+    {
+        Start();
+        std::cin >> c;
+        switch (c)
+        {
+        case 1:
+            Simple_mass(mass, x, n);
+            break;
+        case 2:
+            Simple_mass(mass, x, n);
+            null_mass(mass, n);
+            break;
+        case 3:
+            rand_mass(mass, x, n);
+            break;
+        default:
+            std::cout << "Неверный ввод";
+            break;
+        }
+    } while (c == 0 || c > 3);
+    std::cout << std::endl;
+    out_mass(mass, x, n);
+    y = gauss(mass, x, n);
+    std::cout << std::endl;
+    for (int i = 0; i < n; i++)
+        std::cout << "x[" << i << "] = " << y[i] << std::endl;
+    return 0;
+}

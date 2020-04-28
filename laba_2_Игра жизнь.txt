@@ -1,0 +1,300 @@
+#include <iostream>
+#include <malloc.h>
+#include <cstdlib>
+int Mass_Add(int& S, int& i, int& j)
+{
+	std::cout << "Введите состояние клетки" << std::endl
+		<< "0 - Клетка мертва" << std::endl
+		<< "1 - Клетка жива" << std::endl;
+	std::cout << "X[" << j << "]Y[" << i << "]=";
+	std::cin >> S;
+	return S;
+}
+void Game(int**& mass, int x, int y, int**& mass_2)
+{
+	int C;
+	for (int j = 0; j < y; j++)
+	{
+		std::cout << std::endl;
+		for (int i = 0; i < x; i++)
+		{
+			C = 0;
+			if (i >= 1 && j >= 1 && i <= x - 2 && j <= y - 2)
+			{
+				if (mass[i - 1][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j + 1] == 1)
+				{
+					C++;
+				}
+			}
+			else if (i == 0 && j == 0)
+			{
+				if (mass[i + 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j + 1] == 1)
+				{
+					C++;
+				}
+			}
+			else if (i == x - 1 && j == y - 1)
+			{
+				if (mass[i - 1][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j] == 1)
+				{
+					C++;
+				}
+			}
+			else if (i == 0 && j == y - 1)
+			{
+				if (mass[i + 1][y - 1]==1)
+				{
+					C++;
+				}
+				if (mass[i][y - 1]==1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j]==1)
+				{
+					C++;
+				}
+			}
+			else if (i == x - 1 && j == 0)
+			{
+				if (mass[i - 1][j + 1]==1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j]==1)
+				{
+					C++;
+				}
+				if (mass[i][j+1]==1)
+				{
+					C++;
+				}
+			}
+			else if (i == 0 && j >= 1 && j <= y - 2)
+			{
+				if (mass[i][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j + 1] == 1)
+				{
+					C++;
+				}
+			}
+			else if (j == 0 && i >= 1 && i <= x - 2)
+			{
+				if (mass[i - 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j + 1] == 1)
+				{
+					C++;
+				}
+			}
+			else if ((i == x - 1) && j >= 1 && (y - 2 >= j))
+			{
+				if (mass[i - 1][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j - 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j + 1] == 1)
+				{
+					C++;
+				}
+			}
+			else if (i >= 1 && j == y - 1 && i <= x - 2)
+			{
+				if (mass[i - 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j] == 1)
+				{
+					C++;
+				}
+				if (mass[i - 1][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i][j + 1] == 1)
+				{
+					C++;
+				}
+				if (mass[i + 1][j + 1] == 1)
+				{
+					C++;
+				}
+			}
+			if (mass[i][j] == 1)
+			{
+				if (C < 2)
+				{
+					mass_2[i][j] = 0;
+				}
+				else if (C == 2 || C == 3)
+				{
+					mass_2[i][j] = 1;
+				}
+				else if (C > 3)
+				{
+					mass_2[i][j] = 0;
+				}
+			}
+			else if (mass[i][j] == 0)
+			{
+				if (C == 3)
+				{
+					mass_2[i][j] = 1;
+				}
+			}
+			std::cout << mass_2[i][j];
+		}
+	}
+}
+void Field(int& x, int& y)
+{
+	std::cout << "Введите сторону квадрата для игры=";
+	std::cin >> x;
+	y = x;
+}
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int x, y, S, P, T;
+	char Y = 'y';
+	char N = 'n';
+	char A = 0;
+	S = 0;
+	x = 0;
+	y = 0;
+	P = 0;
+	T = 0;
+	Field(x, y);
+	int** mass_first;
+	mass_first = (int**)malloc(y * sizeof(int*));
+	for (int i = 0; i < y; i++)
+	{
+		mass_first[i] = (int*)malloc(x * sizeof(int*));
+	}
+	int** mass_second;
+	mass_second = (int**)malloc(y * sizeof(int*));
+	for (int i = 0; i < y; i++)
+	{
+		mass_second[i] = (int*)malloc(x * sizeof(int*));
+	}
+	for (int j = 0; j < y; j++)
+	{
+		for (int i = 0; i < x; i++)
+		{
+			do
+			{
+				Mass_Add(S, i, j);
+				if (S != 0 && S != 1)
+				{
+					std::cout << "Неверный ввод\n";
+				}
+			} while (S != 0 && S != 1);
+			mass_first[i][j] = S;
+			mass_second[i][j] = S;
+		}
+	}
+	do {
+		if (T == 0)
+		{
+			Game(mass_first, x, y, mass_second);
+			T++;
+		}
+		else
+		{
+			Game(mass_second, x, y, mass_first);
+			T = 0;
+		}
+		P++;
+		std::cout << std::endl << "Поколение№" << P << std::endl;
+		std::cout << "Продолжаем?\n" << "y/n" << std::endl;
+		std::cin >> A;
+		system("cls");
+	} while (A != y);
+	return 0;
+}

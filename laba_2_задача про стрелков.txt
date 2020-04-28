@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+void input_X_Y(int& x, int& y)
+{
+	std::cout << "Введите кол/во стрелков ";
+	std::cin >> x;
+	std::cout << "Введите кол/во выстрелов ";
+	std::cin >> y;
+}
+int input_data()
+{
+	int K;
+	do
+	{
+		std::cin >> K;
+	} while (K > 10 || K < 0);
+	return K;
+}
+void Sort_W(int** mass, int T, int x, int y)
+{
+	std::vector<int> Winners;
+	int Winner = 0;
+	int P_Winner = 0;
+	int Points = 0;
+	std::cout << "Победитель № ";
+	for (int i = 0; i < x; i++)
+	{
+		for (int k = 0; k < y; k++)
+		{
+			if (mass[i][k] == T)
+			{
+				for (int Z = 0; Z < y; Z++)
+				{
+					Points += mass[i][Z];
+				}
+				if (P_Winner < Points)
+				{
+					Winners.clear();
+					Winners.push_back(i);
+				}
+				if (P_Winner == Points)
+				{
+					Winners.push_back(i);
+				}
+			}
+		}
+	}
+	for (int W = 0; W < Winners.size();W++)
+	{
+		std::cout << Winners[W]+1;
+	}
+}
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int x, y;
+	input_X_Y(x, y);
+	int** mass;
+	mass = (int**)malloc(x * sizeof(int*));
+	for (int i = 0; i < x; i++)
+	{
+		mass[i] = (int*)malloc(y * sizeof(int));
+	}
+	for (int i = 0; i < x; i++)
+	{
+		std::cout << "Стрелок № " << i + 1 << std::endl;
+		for (int k = 0; k < y; k++)
+		{
+			std::cout << "Выстрел № " << k + 1 << "=";
+			mass[i][k] = input_data();
+		}
+	}
+	int B_results = -1;
+	for (int i = 0; i < x; i++)
+	{
+		for (int k = 0; k < y; k++)
+		{
+			if (mass[i][k] > B_results)
+			{
+				B_results = mass[i][k];
+			}
+		}
+	}
+	Sort_W(mass, B_results, x, y);
+}

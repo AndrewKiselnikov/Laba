@@ -1,0 +1,42 @@
+#include <iostream>
+long long int slojenie(long long int X, long long int Y, long long int C, long long int K)
+{
+	if (Y == 1)
+	{
+		return X;
+	}
+	else if (Y == 0)
+	{
+		return 1;
+	}
+	else if (Y > 1)
+	{
+		for (int i=0;i<K-1;i++)
+		{
+		X += C;
+		}
+		C = X;
+		Y--;
+		return slojenie(X, Y, C,K);
+	}
+}
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	long long int X = 0, Y = 0, C = 0;
+	std::cout << "Введите число X\n";
+	std::cin >> X;
+	std::cout << "Введите число Y\n";
+	std::cin >> Y;
+	long long int K = X;
+	 C = X;
+	if ((Y == 1) || (Y == 0) || (Y > 1))
+	{
+		std::cout << X << "^" << Y << "=" << slojenie(X, Y, C, K);
+	}
+	else
+	{
+		std::cout << "1/" << slojenie(X, -Y, C,K);
+	}
+}
+

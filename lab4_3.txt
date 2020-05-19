@@ -1,0 +1,39 @@
+#include <iostream>
+int F(int N);
+int G(int N)
+{
+	if ((N <= 10) && (N>0))
+	{
+		if (N == 1)
+		{
+			return 2;
+		}
+		else if (N > 1)
+		{
+			return F(N - 1) + G(N - 1);
+		}
+	}
+}
+int F(int N)
+{
+	if ((N <= 10) && (N>0))
+	{
+		if (N == 1)
+		{
+			return -2;
+		}
+		else if (N > 1)
+		{
+			return F(N - 1) * G(N - 1);
+		}
+	}
+}
+int main()
+{
+	int N = 10;
+	for (int i = 1; i <= N; i++)
+	{
+		std::cout <<"F("<<i<< ")" << F(i) << std::endl;
+		std::cout <<"G(" << i << ")" << G(i)<< std::endl;
+	}
+}

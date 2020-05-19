@@ -1,0 +1,40 @@
+#include <iostream>
+float Summa(int A[], int n, float Sum, int C)
+{
+	if (n >= 0)
+	{
+
+		if ((A[n] % 2) == 0)
+		{
+			Sum = Sum * A[n];
+			C++;
+		}
+		return Summa(A, n - 1, Sum,C);
+	}
+	else
+		if (C == 0)
+		{
+			return 0;
+		}
+		return Sum;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int N, K = 0, C=0;
+	float Sum = 1;
+	int Z = 0;
+	std::cout << "Введите N";
+	std::cin >> N;
+	int* A = new int[N];
+	std::cout << "Введите значение переменных\n";
+	for (int i = 0; i < N; i++)
+	{
+		std::cout << "A[" << i << "]";
+		std::cin >> K;
+		A[i] = K;
+	}
+	N--;
+	std::cout << Summa(A, N, Sum,C);
+}

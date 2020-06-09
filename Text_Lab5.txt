@@ -1,0 +1,10 @@
+1 200 Alederov.B.A Central 1000000
+2 120 Alederov.S.A South 150000
+3 265 Don.A.K North 200000
+4 433 Vadimov.T.R South 3000000
+5 132 Omarov.D.A Central 350000
+6 132 Trotsky.B.A Central 2300000
+7 454 Stalin.I.V North 5000000
+8 75 Kubishev.T.R South 1500000
+9 1000000 Putin.V.V Central 10000000000000000
+10 53 Nevskey.A.I South 2400000

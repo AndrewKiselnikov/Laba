@@ -1,0 +1,89 @@
+#include <algorithm>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+struct room {
+	int number;
+	int size;
+	string Name;
+	string rayon;
+	int coast;
+};
+
+bool cmpByFam(const room& r1, const room& r2)
+{
+	return r1.Name < r2.Name;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	string b;
+	string x;
+	room s;
+	ifstream file;
+
+	file.open("Text.txt");
+	int len(0);
+
+	if (file.is_open()) {
+		while (!file.eof()) {
+			string s;
+			getline(file, s);
+			len++;
+		}
+	}
+
+	room* arr = new room[len];
+	file.seekg(0, ios_base::beg);
+
+	for (size_t i = 0; i < len; i++)
+	{
+		getline(file, x);
+		istringstream iss(x);
+
+		iss >> s.number >> s.size >> s.Name >> s.rayon >> s.coast;
+
+		arr[i] = s;
+	}
+
+	for (size_t n = 0; n < len; n++)
+	{
+		cout << arr[n].number << " "
+			<< arr[n].size << " "
+			<< arr[n].Name << " "
+			<< arr[n].rayon << " "
+			<< arr[n].coast << endl;
+	}
+	cout << "///////////////////////////////////////" << endl;
+
+	for (size_t n = 0; n < len; n++)
+	{
+		if (arr[n].rayon == "Central")
+		{
+			cout << arr[n].number << endl;
+		}
+	}
+	cout << "///////////////////////////////////////" << endl;
+	sort(arr, arr + len, cmpByFam);
+
+	for (size_t n = 0; n < len; n++)
+	{
+		if (arr[n].coast > 1000000)
+		{
+			cout << arr[n].number << " "
+				<< arr[n].size << " "
+				<< arr[n].Name << " "
+				<< arr[n].rayon << " "
+				<< arr[n].coast << endl;
+		}
+	}
+
+	file.close();
+
+}
+
